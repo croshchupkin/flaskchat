@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import form_field %}
+
+{% block content %}
+  <h1>Create chat</h1>
+  <div class="row">
+    <div class="col-lg-9">
+      <form class="form-horizontal" action="{{ url_for('chat.create') }}" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form_field(form.title) }}
+
+        <div class="form-group">
+          <div class="col-sm-9"></div>
+          <div class="col-sm-3">
+            <input class="form-control btn btn-primary" type="submit" value="Create" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+{% endblock %}

@@ -1,0 +1,93 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flaskchat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/pastel-stream.css') }}" />
+  </head>
+  <body>
+
+    <div class="container">
+      <!-- Navbar -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="navbar navbar-default">
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+
+              {% if current_user.is_authenticated() %}
+              <ul class="nav navbar-nav">
+                <li>
+                  <a href="{{ url_for('chat.create') }}">Create chat</a>
+                </li>
+              </ul>
+              {% endif %}
+
+              <ul class="nav navbar-nav navbar-right">
+
+                {% if current_user.is_authenticated() %}
+                  <li>
+                    <a href="{{ url_for_security('logout') }}">Logout</a>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="{{ url_for_security('login') }}">Login</a>
+                  </li>
+                  <li>
+                    <a href="{{ url_for_security('register') }}">Register</a>
+                  </li>
+                {% endif %}
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="alert alert-info">
+                {% for message in messages %}
+                  <p>{{ message }}</p>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="row">
+
+        {% if current_user.is_authenticated() %}
+           <div class="col-lg-3">
+
+             {% if chat_list %}
+               <h3>Chats</h3>
+               {% for chat in chat_list %}
+               <p>{{ chat.title }}</p>
+               {% endfor %}
+             {% endif %}
+
+           </div>
+           <div class="col-lg-9">
+        {% else %}
+          <div class="col-lg-12">
+        {% endif %}
+
+          {% block content %}{% endblock %}
+
+        </div>
+      </div>
+    </div>
+
+    {% block javascripts %}
+      <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>
+

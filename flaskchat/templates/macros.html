@@ -1,0 +1,32 @@
+{% macro form_field(field) %}
+  <div class="form-group {% if field.errors %}has-error has-feedback{% endif %}">
+    <label for="{{ field.id }}" class="col-sm-4 control-label">{{ field.label }}</label>
+    <div class="col-sm-8">
+      {{ field(class='form-control') }}
+      {% if field.errors %}
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <span class="help-block">
+          {% for error in field.errors %}
+            {{ error }} {% if not loop.last %}<br />{% endif %}
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro form_checkbox(field) %}
+  <div class="form-group {% if field.errors %}has-error has-feedback{% endif %}">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-8">
+      <div class="checkbox">
+        <label>
+          {{ field }}
+          {{ field.label }}
+        </label>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+
