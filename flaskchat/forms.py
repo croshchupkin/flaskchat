@@ -37,3 +37,7 @@ class CreateChatForm(Form):
         Length(min=1, max=128,
                message='Chat title must be between 1 and 128 characters long'),
         unique_chat_name])
+
+
+class SearchChatForm(Form):
+    term = StringField('Search chat')

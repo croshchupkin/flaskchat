@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request
+from flask import Flask
 
 
 def create_app(config_file_name):
@@ -41,14 +41,13 @@ def _init_blueprints(app):
     from flaskchat.chat import chat
     app.register_blueprint(chat, url_prefix='/chat')
 
+    from flaskchat.api import api
+    app.register_blueprint(api, url_prefix='/api')
+
 
 def _init_context_processors(app):
-    from flask.ext.security.core import current_user
-    from flaskchat.models import Chat
+    from flaskchat.forms import SearchChatForm
 
     @app.context_processor
-    def get_chat_list():
-        data = {}
-        if current_user.is_authenticated():
-            data['chat_list'] = Chat.query.order_by('title').all()
-        return data
+    def add_chat_search_form():
+        return {'chat_search_form': SearchChatForm()}
